@@ -1,21 +1,27 @@
-import caesarCipher from "./caesarCipher";
+import analyzeArray from "./analyzeArray";
 
-test('Lowercase string with shift of 1', () => {
-  expect(caesarCipher('hello world', 1)).toEqual('ifmmp xpsme');
+test('Simple array of positive integers', () => {
+  expect(analyzeArray([4, 5, 19, 3, 49])).toMatchObject({
+    average: 16,
+    min: 3,
+    max: 49,
+    length: 5
+  });
 });
 
-test('Wrap around the alphabet', () => {
-  expect(caesarCipher('zebra goes for a walk', 20)).toEqual('tyvlu aiym zil u qufe');
+test('Array with negative integers', () => {
+  expect(analyzeArray([4, -15, 19, -33, 49])).toMatchObject({
+    average: 4.8,
+    min: -33,
+    max: 49,
+    length: 5
+  });
 });
 
-test('A very large shift factor', () => {
-  expect(caesarCipher('a large shift factor', 100)).toEqual('w hwnca odebp bwypkn');
-});
-
-test('Capitalization', () => {
-  expect(caesarCipher('I have some Capitalization in hEre', 5)).toEqual('N mfaj xtrj Hfunyfqnefynts ns mJwj');
-});
-
-test('Capitalization and punctuation', () => {
-  expect(caesarCipher('I have some capitalization and punctuation!', 30)).toEqual('M lezi wsqi getmxepmdexmsr erh tyrgxyexmsr!');
+test('Array with decimals', () => {
+  const result = analyzeArray([-15.5, 1.1, -1, 30.2]);
+  expect(result.average).toBeCloseTo(3.7)
+  expect(result.min).toBe(-15.5)
+  expect(result.max).toBe(30.2)
+  expect(result.length).toBe(4)
 });
